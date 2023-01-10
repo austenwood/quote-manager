@@ -58,4 +58,20 @@ export class QuoteManager {
   //   {Price: 1.0, Volume: 1,000, AvailableVolume: 0}
   //   {Price: 2.0, Volume: 1,000, AvailableVolume: 750}
   executeTrade(symbol, volumeRequested) {}
+
+  // Used for testing the QuoteManager class.
+  printQuotes(symbol) {
+    const quotes = this.quotes.get(symbol);
+    if (!quotes) {
+      console.log(`No quotes found for symbol ${symbol}`);
+      return;
+    }
+
+    console.log(`Quotes for symbol ${symbol}:`);
+    for (const quote of quotes) {
+      console.log(
+        `  id: ${quote.id}, price: ${quote.price}, available volume: ${quote.availableVolume}, expiration: ${quote.expiration}`
+      );
+    }
+  }
 }
