@@ -1,44 +1,92 @@
+import { v4 as uuidv4 } from "uuid";
+
 export class Quote {
-  getId() {
-    // UUID
+  constructor(symbol, price, availableVolume, expiration) {
+    this.id = uuidv4();
+    this.symbol = symbol;
+    this.price = price;
+    this.availableVolume = availableVolume;
+    this.expiration = new Date(expiration);
   }
 
-  setId(id) {}
+  getId() {
+    // UUID
+    return this.id;
+  }
+
+  setId(id) {
+    this.id = id;
+  }
 
   setSymbol(symbol) {
     // string
+    this.symbol = symbol;
   }
 
-  getSymbol() {}
+  getSymbol() {
+    return this.symbol;
+  }
 
   setPrice(price) {
     // currency numeric type
+    this.price = price;
   }
 
-  getPrice() {}
+  getPrice() {
+    return this.price;
+  }
 
   setAvailableVolume(volume) {
     //int
+    this.availableVolume = volume;
   }
 
-  getAvailableVolume() {}
+  getAvailableVolume() {
+    return this.volume;
+  }
 
-  setExpiration(expiration) {}
+  setExpiration(expiration) {
+    this.expiration = expiration;
+  }
 
   getExpiration() {
     // date
+    return this.expiration;
   }
 }
 
 export class TradeResult {
-  setId(id) {}
-  getId() {}
-  setSymbol(symbol) {}
-  getSymbol() {}
-  setVolumeWeightedAveragePrice(avgPrice) {}
-  getVolumeWeightedAveragePrice() {}
-  setVolumeRequested(volume) {}
-  getVolumeRequested() {}
+  constructor(symbol, volumeWeightedAveragePrice, volumeRequested) {
+    this.id = uuidv4();
+    this.symbol = symbol;
+    this.volumeWeightedAveragePrice = volumeWeightedAveragePrice;
+    this.volumeRequested = volumeRequested;
+  }
+
+  setId(id) {
+    this.id = id;
+  }
+  getId() {
+    return this.id;
+  }
+  setSymbol(symbol) {
+    this.symbol = symbol;
+  }
+  getSymbol() {
+    return this.symbol;
+  }
+  setVolumeWeightedAveragePrice(avgPrice) {
+    this.volumeWeightedAveragePrice = avgPrice;
+  }
+  getVolumeWeightedAveragePrice() {
+    return this.volumeWeightedAveragePrice;
+  }
+  setVolumeRequested(volume) {
+    this.volumeRequested = volume;
+  }
+  getVolumeRequested() {
+    return this.volumeRequested;
+  }
 }
 
 // Please create your own quote manager using the class below.

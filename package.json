@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/austenwood/quote-manager/issues"
   },
-  "homepage": "https://github.com/austenwood/quote-manager#readme"
+  "homepage": "https://github.com/austenwood/quote-manager#readme",
+  "dependencies": {
+    "uuid": "^9.0.0"
+  }
 }
