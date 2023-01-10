@@ -1,0 +1,19 @@
+{
+  "name": "quote-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/austenwood/quote-manager.git"
+  },
+  "author": "Austen Wood",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/austenwood/quote-manager/issues"
+  },
+  "homepage": "https://github.com/austenwood/quote-manager#readme"
+}
