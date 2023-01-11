@@ -1,3 +1,5 @@
+import { TradeResult } from "./TradeResult.js";
+
 // Please create your own quote manager using the class below.
 //
 // Please adhere to good Object Oriented Programming concepts, and create whatever support code you feel is necessary.
@@ -42,7 +44,26 @@ export class QuoteManager {
   // If there is no quote on the symbol's book with available volume, return null.
   // Otherwise return a Quote object with all the fields set.
   // Don't return any quote which is past its expiration time, or has been removed.
-  getBestQuoteWithAvailableVolume(symbol) {}
+  getBestQuoteWithAvailableVolume(symbol) {
+    if (!this.quotes.has(symbol)) {
+      return null;
+    }
+
+    const quotes = Array.from(this.quotes.get(symbol).values());
+    const now = new Date();
+    const validQuotes = quotes.filter((quote) => {
+      return quote.availableVolume > 0 && quote.expiration > now;
+    });
+
+    if (validQuotes.length === 0) {
+      return null;
+    }
+
+    // O(n log(n)) time complexity to maintain price order.
+    validQuotes.sort((a, b) => a.price - b.price);
+
+    return validQuotes[0];
+  }
 
   // Request that a trade be executed. For the purposes of this interface, assume that the trade is a request to BUY, not sell. Do not trade an expired quotes.
   // To Execute a trade:
@@ -57,7 +78,33 @@ export class QuoteManager {
   // And After calling this a second time for 500 volume, the quotes are:
   //   {Price: 1.0, Volume: 1,000, AvailableVolume: 0}
   //   {Price: 2.0, Volume: 1,000, AvailableVolume: 750}
-  executeTrade(symbol, volumeRequested) {}
+  executeTrade(symbol, volumeRequested) {
+    let volume = volumeRequested;
+    let volumeWeightedAveragePrice = 0;
+    while (volume > 0) {
+      const quote = this.getBestQuoteWithAvailableVolume(symbol);
+      if (!quote) {
+        break;
+      }
+      const availableVolume = quote.availableVolume;
+      const price = quote.price;
+      // VWAP = (Cumulative (Price * Volume)) / (Cumulative Volume)
+      if (volume >= availableVolume) {
+        volumeWeightedAveragePrice += availableVolume * price;
+        volume -= availableVolume;
+        quote.availableVolume = 0;
+      } else {
+        volumeWeightedAveragePrice += volume * price;
+        quote.availableVolume -= volume;
+        volume = 0;
+      }
+    }
+    return new TradeResult(
+      symbol,
+      volumeWeightedAveragePrice / volumeRequested,
+      volumeRequested
+    );
+  }
 
   // Used for testing the QuoteManager class.
   printQuotes(symbol) {

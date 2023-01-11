@@ -11,8 +11,13 @@ const quoteManager = new QuoteManager();
 quoteManager.addOrUpdateQuote(quote1);
 quoteManager.addOrUpdateQuote(quote2);
 
+quoteManager.executeTrade("TBMG", 500);
+quoteManager.printQuotes("TBMG");
+// And After calling this a second time for 500 volume, the quotes are:
+//   {Price: 1.0, Volume: 1,000, AvailableVolume: 0}
+//   {Price: 2.0, Volume: 1,000, AvailableVolume: 750}
+quoteManager.executeTrade("TBMG", 500);
 quoteManager.printQuotes("TBMG");
 
 quoteManager.removeAllQuotes("TBMG");
-
 quoteManager.printQuotes("TBMG");
